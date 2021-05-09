@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0-1/css/bootstrap.min.css}"/>
+</head>
+<body>
+<script th:src="@{/webjars/bootstrap/4.6.0-1/js/bootstrap.bundle.min.js}"></script>
+<div class="container">
+    <form action="#" th:action="@{/person}" method="post" th:object="${person}">
+        <div class="mb-3">
+            <label class="form-label">Имя</label>
+            <input type="text" class="form-control" id="name" name="name"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Возраст</label>
+            <input type="text" class="form-control" id="age" name="age"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Температура</label>
+            <input type="text" class="form-control" id="temperature" name="temperature"/>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn-primary">Узнать</button>
+        </div>
+    </form>
+    <div>
+        <h1>Список пользователей</h1>
+        <table class="table">
+            <tr><th>Имя</th><th>Возраст</th><th>Температура</th></tr>
+            <tr th:each="person : ${persons}">
+                <td th:text="${person.name}">...</td>
+                <td th:text="${person.age}">...</td>
+                <td th:text="${person.temperature}">...</td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
