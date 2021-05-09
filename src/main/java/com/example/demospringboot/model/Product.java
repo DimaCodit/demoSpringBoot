@@ -1,4 +1,4 @@
-package com.example.demospringboot.dto;
+package com.example.demospringboot.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonDto {
+public class Product {
 
     private Long id;
-    private String name;
-    private Integer age;
-    private Integer temperature;
+    private String title;
+    private Integer cost;
+    private boolean isDelete;
+
 
 }

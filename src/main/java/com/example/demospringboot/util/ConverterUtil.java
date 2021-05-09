@@ -1,15 +1,15 @@
 package com.example.demospringboot.util;
 
-import com.example.demospringboot.dto.PersonDto;
-import com.example.demospringboot.model.Person;
+import com.example.demospringboot.dto.ProductDto;
+import com.example.demospringboot.model.Product;
 
 public class ConverterUtil {
 
-    public static Person dtoToPerson(PersonDto personDto) {
-        return new Person(personDto.getId(), personDto.getName(), personDto.getAge(), personDto.getTemperature(), 1, false);
+    public static Product dtoToProduct(ProductDto productDto) {
+        return new Product(productDto.getId(), productDto.getTitle(), productDto.getCost(), false);
     }
 
-    public static PersonDto personToDto(Person person) {
-        return new PersonDto(person.getId(), person.getName(), person.getAge(), person.getTemperature());
+    public static ProductDto productToDto(Product product) {
+        return new ProductDto(product.getId(), product.getTitle(), product.getCost());
     }
 }
