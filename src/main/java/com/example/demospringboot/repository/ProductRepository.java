@@ -35,9 +35,7 @@ public class ProductRepository {
     }
 
     public List<Product> findAll(){
-//        return personList.stream()
-//                .filter(it->!it.isDelete())
-//                .collect();
+
         Session session = getSession();
         session.beginTransaction();
         List<Product> productsList = (List<Product>) session.createQuery("from Product").getResultList();
