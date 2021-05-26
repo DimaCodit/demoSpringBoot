@@ -1,9 +1,11 @@
 package com.example.demospringboot.repository;
 
 import com.example.demospringboot.model.Product;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -16,19 +18,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Repository
+@RequiredArgsConstructor
 public class ProductRepository {
 
     private List<Product> personList = new CopyOnWriteArrayList<>();
-    private AtomicLong generator = new AtomicLong();
-    private SessionFactory factory;
 
-    public ProductRepository() {
-
-        this.factory = new Configuration()
-                .addAnnotatedClass(Product.class)
-                .buildSessionFactory();
-
-    }
+    private final SessionFactory factory;
 
     private Session getSession() {
         return this.factory.getCurrentSession();
