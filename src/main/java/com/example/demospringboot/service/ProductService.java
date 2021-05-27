@@ -24,6 +24,6 @@ public class ProductService {
 
     public void add(ProductDto product) {
         log.debug("add product");
-        productRepository.add(ConverterUtil.dtoToProduct(product));
+        productRepository.saveOrUpdate(ConverterUtil.dtoToProduct(product));
     }
 }

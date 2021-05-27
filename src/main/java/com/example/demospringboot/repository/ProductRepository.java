@@ -1,6 +1,8 @@
 package com.example.demospringboot.repository;
 
 import com.example.demospringboot.model.Product;
+import com.example.demospringboot.util.HibernateAction;
+import com.example.demospringboot.util.HibernateUtil;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,8 +23,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductRepository {
 
-    private List<Product> personList = new CopyOnWriteArrayList<>();
-
     private final SessionFactory factory;
 
     private Session getSession() {
@@ -31,30 +31,25 @@ public class ProductRepository {
 
     public List<Product> findAll(){
 
-        Session session = getSession();
-        session.beginTransaction();
-        List<Product> productsList = (List<Product>) session.createQuery("from Product").getResultList();
-        getSession().getTransaction().commit();
+        List<Product> productsList = (List<Product>) HibernateUtil.doInTransactionWithResult(factory, s -> s.createQuery("from Product").getResultList());
+
         if (productsList == null) {
             return new ArrayList<Product>();
         }
         return productsList;
     }
 
-    public void add(Product product) {
-        Session session = getSession();
-        session.beginTransaction();
-        session.save(product);
-        session.getTransaction().commit();
-    }
-
     public Product getById(Long id) {
-        Session session = getSession();
-        session.beginTransaction();
-        Product product = session.get(Product.class, id);
-        session.getTransaction().commit();
-        return product;
+        return (Product)HibernateUtil.doInTransactionWithResult(factory, s -> s.get(Product.class, id));
     }
 
+    public void deleteById(Long id) {
+        Product product = (Product)HibernateUtil.doInTransactionWithResult(factory, s -> s.get(Product.class, id));
+        HibernateUtil.doInTransaction(factory, s -> s.delete(product));
+    }
+
+    public void saveOrUpdate(Product product) {
+        HibernateUtil.doInTransaction(factory, s -> s.saveOrUpdate(product));
+    }
 
 }
